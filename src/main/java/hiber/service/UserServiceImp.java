@@ -32,16 +32,7 @@ public class UserServiceImp implements UserService {
     @Transactional
     @Override
     public User getUser(String model, int series) {
-        try (Session session = sessionFactory.openSession()) {
-            String hql = "from User WHERE car.model = :model and car.series = :series";
-            Query query = session.createQuery(hql);
-            query.setParameter("model", model);
-            query.setParameter("series", series);
-            return (User) query.getSingleResult();
-        } catch (HibernateError e) {
-            e.printStackTrace();
-        }
-        return null;
+        return userDao.getUser(model, series);
     }
 
     @Transactional(readOnly = true)
